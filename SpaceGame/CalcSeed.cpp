@@ -22,12 +22,7 @@ struct sha256_ctx
 	uint32_t hash[8];
 	uint32_t wbuf[16];
 };
-#define SHA256_BLOCK_SIZE   64
-#define SHA256_DIGEST_SIZE  32
 
-
-
-#define rotl32(x,n)   (((x) << n) | ((x) >> (32 - n)))
 #define rotr32(x,n)   (((x) >> n) | ((x) << (32 - n)))
 #define s_0(x)  (rotr32((x), 2) ^ rotr32((x), 13) ^ rotr32((x), 22))
 #define s_1(x)  (rotr32((x),  6) ^ rotr32((x), 11) ^ rotr32((x), 25))

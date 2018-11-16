@@ -2,28 +2,21 @@
 #include <sstream>
 #include <thread>
 #include "CalcSeed.h"
-void CalcuAsm(int *x, int *y, int lengthOfArray)
-{
-
-}
+#include "Object.h"
+#include <random>
 int main()
 {
 	srand(time(0));
-	unsigned char *data = SHA2::CalcHash((unsigned char*)"42",2);
-	for (int i = 0; i < 100; i++)
+	unsigned char data[32];
+	int massive[33];
+	memcpy(data, data, SEED_SIZE);
+	for (int i = 0; i < 33; i++) massive[i] = 0;
+	for (int i = 0; i < 100000; i++)
 	{
-		uint64_t	
-			X = rand()*rand(),
-			Y = rand()*rand(),
-			Z = rand()*rand();
-		data = SHA2::CalcXYZHash(X, Y, Z, data);
-		std::stringstream val;
-		val << std::hex;
-		for (int i = 0; i < 32; i++) val << int(data[i]) << " ";
-		std::cout <<"x: " + std::to_string(X) 
-					+ " Y: "+ std::to_string(Y)
-					+ " Z: "+ std::to_string(Z) 
-					+ " GenSeed: " + val.str() << std::endl << std::endl;
+		StarSystem sys(1, 2, 3, data);
+		sys.getObjectSeed(data);
+		massive[sys.getSNum()]++;
 	}
+	for (int i = 0; i < 33; i++) std::cout << i << ":  " << massive[i] << std::endl;
 	std::this_thread::sleep_for(std::chrono::seconds(50));
 }
