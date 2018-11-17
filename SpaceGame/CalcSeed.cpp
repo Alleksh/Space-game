@@ -1,4 +1,6 @@
 #include "CalcSeed.h"
+#define SHA256_BLOCK_SIZE   0x40
+#define SHA256_DIGEST_SIZE  0x20
 static const double PrimalSqrt[8]
 {
 	0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A,
@@ -147,3 +149,8 @@ unsigned char* SHA2::CalcHash(unsigned char data[], unsigned long length)
 	sha256(hval, data, length);
 	return hval;
 }
+
+
+// undef useless macro
+#undef SHA256_BLOCK_SIZE   
+#undef SHA256_DIGEST_SIZE  

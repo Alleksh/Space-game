@@ -1,5 +1,26 @@
 #include "Object.h"
- void Object::getObjectSeed(uc* dest)
+//Object types
+//define useful macro
+#define __ERR_UNKNOWN_OBJ	0xFF
+#define __UNIVERSE			0x0
+#define __GALAXY_CLUSTER	0x1
+#define __GALAXY			0x2
+#define __STAR_SYSTEM		0x3
+#define __STARS				0x4
+#define __PLANET			0x5
+#define SEED_SIZE			0x20
+
+//Object
+Object::Object(int64_t x, int64_t y, int64_t z, uc *data, u8 ObjType, Object* parent) : ObjectType(ObjType)
+{
+	this->parent = parent;
+	memcpy(pSeed, data, SEED_SIZE);
+	mySeed = SHA2::CalcXYZHash(x, y, z, data);
+	std::string str(reinterpret_cast<char const*>(mySeed), SEED_SIZE);
+	std::seed_seq returnValue(str.begin(), str.end());
+	lce.seed(returnValue);
+}
+void Object::getObjectSeed(uc* dest)
 {
 	memcpy(dest, mySeed, SEED_SIZE);
 }
@@ -9,54 +30,50 @@ u64 Object::mySeedToNum()
 }
 u64 Object::SeedToNum(uc* seed)
 {
-	u64 returnValue = 0;
-	u64 len = sizeof(u64);
-	int res = 0;
-	for (int i = 0; i<len; i++)
+	u64 returnVal = 0;
+	u8 len = sizeof(u64);
+	for (u8 i = 0; i<len; i++)
 	{
-		res *= 256;
-		res += seed[rand() % 32];
+		returnVal *= 256;
+		returnVal += seed[rand() % 32];
 	}
-	return returnValue;
+	return returnVal;
 }
-Object::Object(int64_t x, int64_t y, int64_t z, uc *data)
+
+//Star
+Star::Star(int64_t x,  uc* seed, Object* parent) : Object((x>>16), (x >> 32), (x >> 48), seed, __STARS, parent)
 {
-	memcpy(pSeed, data, SEED_SIZE);
-	mySeed = SHA2::CalcXYZHash(x, y, z, data);
-	std::string str(reinterpret_cast<char const*>(mySeed), SEED_SIZE);
-	std::seed_seq returnValue(str.begin(), str.end());
-	lce.seed(returnValue);
+
 }
-bool getPChance(const u8 itr, u64 randomNum)
+
+
+//Planet
+Planet::Planet(int64_t x, int64_t y, int64_t z, uc* seed, Object* parent) : Object(x, y, z, seed, __PLANET, parent)
 {
-	if (itr > 32) return 0;
-	else	
-	{
-		randomNum %= 9223372035781033984;
-		u64 _v = u64((((long double)(1.0) / (itr + 2))
-			* 2147483648))*u64(8589934591);
-		return 	randomNum <_v;
-	}
-	return 1;
+
 }
-int factorial(int n)
+
+//Star System
+StarSystem::StarSystem(int64_t x, int64_t y, int64_t z, uc* seed) : Object(x, y, z, seed, __STAR_SYSTEM)
 {
-	return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
+	planetNum = u16((log(1 - (long double)(lce()) / 18446744073709551615) / (-0.0802027073L))) % 25;
+	sNum = 1 /*+ u16((log(1 - (long double)(lce()) / 18446744073709551615) / (-1.9039728L))) % 7*/;
 }
-bool getSChance(const u8 itr, u64 randomNum)
+u8 StarSystem::getPlanetNum()
 {
-	if (itr > 8) return 0;
-	else
-	{
-		randomNum %= 9223372035781033984;
-		u64 _v = u64((((long double)(1.0) / (factorial(itr + 3))) *
-			2147483648))*u64(8589934591);
-		return 	randomNum <_v;
-	}
-	return 1;
+	return planetNum;
 }
-StarSystem::StarSystem(int64_t x, int64_t y, int64_t z, uc* seed) : Object(x, y, z, seed)
+u8 StarSystem::getSNum()
 {
-	while (getPChance(planetNum, lce())) planetNum++;
-	while (getSChance(sNum, lce())) sNum++;
+	return sNum;
 }
+
+#undef __ERR_UNKNOWN_OBJ
+#undef __UNIVERSE		
+#undef __GALAXY_CLUSTER	
+#undef __GALAXY			
+#undef __STAR_SYSTEM		
+#undef __STAR				
+#undef __PLANET		
+#undef SEED_SIZE
+// undef useless macro
