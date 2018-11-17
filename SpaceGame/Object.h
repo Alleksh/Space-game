@@ -1,7 +1,7 @@
 #pragma once
 #include "CalcSeed.h"
 #include <random>
-
+#include <math.h>
 class Object
 {
 private:
@@ -13,7 +13,10 @@ protected:
 		, 1442695040888963407, 18446744073709551615> lce;
 	Object(int64_t, int64_t, int64_t, uc*, u8, Object* parent = NULL);
 	u64 mySeedToNum();
-	virtual void setParameters(u32*);
+	virtual void setParameters(u32*)
+	{
+
+	}
 public:
 	const u8 ObjectType;
 	static u64 SeedToNum(uc*);
@@ -25,15 +28,25 @@ public:
 	~Object()
 	{
 		delete mySeed;
-		~lce();
 	}
 };
 class Star : public Object
 {
 private:
-	u8 sNum = 1;
+	u8 myType;
+	long double 
+		myMass,
+		myRadius,
+		myLuminosity;
 	Object* objects;
 public:
+	long double Mass();
+	long double Radius();
+	long double Luminosity();
+	long double Type();
+
+	long double CalculateOrbitalSpeed(long double, long double, long double);
+	long double CalculateOrbitalSpeed(long double, long double, long double, long double);
 	Star(int64_t, uc*, Object*);
 };
 class Planet : public Object
