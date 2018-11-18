@@ -32,7 +32,6 @@
 *.app
 # Visual Studio files
 *.opendb
-*.vcxproj
 *.user
 *.filters
 *.tlog
