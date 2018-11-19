@@ -10,6 +10,16 @@
 #define __PLANET			0x5
 #define SEED_SIZE			0x20
 
+//Calculation
+long double Calculation::CalculateOrbitalSpeed(StarMass sMass, PlanetMass pMass, Distance dist, Distance major_semiaxis)
+{
+	long double
+		returnVal = ((sMass.SMass() + pMass.EMass()) * _GravityConstant);
+	returnVal *= ((long double)(2) / dist.ToMeters()) - // 2/dist
+		((long double)(1) / major_semiaxis.ToMeters());	// 1/major_semiaxis
+	return std::sqrt(returnVal);
+}
+
 //Object
 Object::Object(int64_t x, int64_t y, int64_t z, uc *data, u8 ObjType, Object* parent) : ObjectType(ObjType)
 {
@@ -97,12 +107,13 @@ Star::Star(uc* seed, Object* parent)
 		myLuminosity = 1400000;
 		break;
 	}
-	myMass			+= dRand(-myMass		/ 10,	myMass		/ 10, lce());
+	myMass			+= dRand(-myMass.SMass()		/ 10,	
+							  myMass.SMass()		/ 10, lce());
 	myRadius		+= dRand(-myRadius		/ 10,	myRadius	/ 10, lce());
 	myLuminosity	+= dRand(-myLuminosity	/ 10,	myLuminosity/ 10, lce());
 	myType			= type;
 }
-long double Star::Mass() 
+StarMass Star::Mass()
 { 
 	return myMass;
 }
@@ -118,22 +129,6 @@ long double Star::Type()
 {
 	return myType;
 }
-long double Star::CalculateOrbitalSpeed(long double pMass, long double dist, long double major_semiaxis)
-{
-	return CalculateOrbitalSpeed(myMass,pMass,dist, major_semiaxis);
-}
-//https://ru.wikipedia.org/wiki/%D0%9E%D1%80%D0%B1%D0%B8%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D1%8C
-long double Star::CalculateOrbitalSpeed(long double sMass, long double pMass, long double dist, long double major_semiaxis)
-{
-	long double 
-		returnVal = _GravityConstant*(//G(M+m) 
-			sMass * 1.989 * std::pow(10, 30)//transfer sMass to KGs
-			+ pMass * 5.972 * std::pow(10,24));//transfer pMass to KGs
-	returnVal *= ((long double)(2) / (_LightSpeedConst*dist)) - // 2/dist
-		((long double)(1) / (_LightSpeedConst * major_semiaxis));	// 1/major_semiaxis
-	return std::sqrt(returnVal);
-}
-
 //Planet
 Planet::Planet(long double MaSMin, long double MiSMin, uc* seed, Object* parent) 
 	: Object(u64(MaSMin), u64(MiSMin), (u64(MiSMin)>>10), seed, __PLANET, parent),
@@ -141,11 +136,11 @@ Planet::Planet(long double MaSMin, long double MiSMin, uc* seed, Object* parent)
 {
 	myMass = log(1 - (long double)(lce()) / 18446744073709551615) / -0.8039728L;
 	myRadius = std::cbrt(
-		((myMass * std::pow(10, 24) * 5.972)
-		/dRand(400, 8000, lce()))
+		(myMass.KGs()
+		/ dRand(400, 8000, lce()))
 		/ 4.1887902);
 }
-long double Planet::Mass()
+PlanetMass Planet::Mass()
 {
 	return myMass;
 }
@@ -174,12 +169,12 @@ StarSystem::StarSystem(int64_t x, int64_t y, int64_t z, uc* seed) : Object(x, y,
 		Planets[0] = new Planet(MaDist, MiDist, mySeed, this);
 	for (u8 i = 1; i < planetNum; i++)
 	{
-		MaDist = Planets[i-1]->GetOrbit().Major_Semiaxis 
+		MaDist = Planets[i-1]->GetOrbit().Major_Semiaxis.ToLS()
 			* u8(
 				u8(log(1 - (long double)(lce()) 
 					/ 18446744073709551615) 
 					/ (-0.1802027073L)) % 10) + MaDist;
-		MiDist = Planets[i-1]->GetOrbit().Minor_Semiaxis 
+		MiDist = Planets[i-1]->GetOrbit().Minor_Semiaxis.ToLS()
 			* u8(
 				u8(log(1 - (long double)(lce()) 
 					/ 18446744073709551615) 
