@@ -34,10 +34,8 @@
 *.opendb
 *.tlog
 *.log
-*.idb
 *.ipch
 *.db
 *.suo
 *.ilk
-*.pdb
 *.enc

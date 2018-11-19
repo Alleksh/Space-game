@@ -77,7 +77,7 @@ struct Orbit
 
 	Orbit(long double MaSMin, long double MiSMin, u64 random1, u64 random2, u64 random3)
 		: Major_Semiaxis(Object::dRand(MaSMin, MaSMin + (MaSMin / 10), random1)),
-		Minor_Semiaxis(Object::dRand(MaSMin, MaSMin + (MaSMin / 10), random1)),
+		Minor_Semiaxis(Object::dRand(MiSMin, MiSMin + (MiSMin / 10), random1)),
 		Focal_Length(Object::dRand(Major_Semiaxis * 0.5, Major_Semiaxis * 0.55, random3)),
 		eccentricity(Focal_Length/Major_Semiaxis)
 	{

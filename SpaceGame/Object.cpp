@@ -175,9 +175,15 @@ StarSystem::StarSystem(int64_t x, int64_t y, int64_t z, uc* seed) : Object(x, y,
 	for (u8 i = 1; i < planetNum; i++)
 	{
 		MaDist = Planets[i-1]->GetOrbit().Major_Semiaxis 
-			* u8((log(1 - (long double)(lce()) / 18446744073709551615) / (-0.1802027073L))) + MaDist;
+			* u8(
+				u8(log(1 - (long double)(lce()) 
+					/ 18446744073709551615) 
+					/ (-0.1802027073L)) % 10) + MaDist;
 		MiDist = Planets[i-1]->GetOrbit().Minor_Semiaxis 
-			* u8((log(1 - (long double)(lce()) / 18446744073709551615) / (-0.1802027073L))) + MiDist;
+			* u8(
+				u8(log(1 - (long double)(lce()) 
+					/ 18446744073709551615) 
+					/ (-0.1802027073L)) % 10) + MiDist;
 		Planets[i] = new Planet(MaDist, MiDist, mySeed, this);
 	}
 }
