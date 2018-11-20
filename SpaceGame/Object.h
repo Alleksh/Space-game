@@ -9,7 +9,7 @@ struct coords
 		y,
 		z;
 }; 
-class Distance
+class Distance	
 {
 protected:
 	long double distance;// in light seconds
@@ -18,193 +18,57 @@ public:
 	{
 		return distance;
 	}
+	Distance();
+	template<typename T>	Distance(T _Value);
 	// returns distance in light seconds
-	long double ToLS()
-	{
-		return distance;
-	}
+	long double ToLS();
 	// returns distance in meters
-	long double ToMeters()
-	{
-		return distance * _LightSpeedConst;
-	}
+	long double ToMeters();
 	//Distance to Light Seconds
-	static long double ToLS(Distance dist)
-	{
-		return dist.distance;
-	}
+	static long double ToLS(Distance dist);
 	//Distance to meters
-	static long double ToMeters(Distance dist)
-	{
-		return dist.distance * _LightSpeedConst;
-	}
+	static long double ToMeters(Distance dist);
 	//Meters to light seconds
-	static long double MToLS(long double meters)
-	{
-		return meters / _LightSpeedConst;
-	}
+	static long double MToLS(long double meters);
 	//Light seconds to meters
-	static long double LSToM(long double LightSeconds)
-	{
-		return LightSeconds * _LightSpeedConst;
-	}
-	Distance()
-	{
-		distance = 0;
-	}
-	template<typename T>	Distance(T _Value)
-	{
-		distance = MToLS(_Value);
-	}
+	static long double LSToM(long double LightSeconds);
+	template<typename T>	Distance		operator+(T _Value);
+	template<typename T>	Distance		operator-(T _Value);
+	template<typename T>	Distance		operator*(T _Value);
+	template<typename T>	Distance		operator/(T _Value);
+	template<typename T>	Distance&		operator+=(T _Value);
+	template<typename T>	Distance&		operator-=(T _Value);
+	template<typename T>	Distance&		operator*=(T _Value);
+	template<typename T>	Distance&		operator/=(T _Value);
+	template<typename T>	bool			operator==(T _Value);
+	template<typename T>	bool			operator>=(T _Value);
+	template<typename T>	bool			operator<=(T _Value);
+	template<typename T>	bool			operator!=(T _Value);
+	template<typename T>	bool			operator>(T _Value);
+	template<typename T>	bool			operator<(T _Value);
+	Distance*								operator=(Distance _Value);
+	Distance								operator+(Distance _Value);
+	Distance								operator-(Distance _Value);
+	Distance								operator*(Distance _Value);
+	Distance								operator/(Distance _Value);
+	bool									operator==(Distance  _Value);
+	bool									operator<=(Distance  _Value);
+	bool									operator>=(Distance  _Value);
+	bool									operator<(Distance  _Value);
+	bool									operator>(Distance  _Value);
+	bool									operator!=(Distance  _Value);
+	Distance&								operator+=(Distance _Value);
+	Distance&								operator-=(Distance _Value);
+	Distance&								operator*=(Distance _Value);
+	Distance&								operator/=(Distance _Value);
 	template<typename T>	Distance		operator=(T _Value)
 	{
 		distance = _Value;
 		return (*this);
 	}
-	template<typename T>	Distance		operator+(T _Value)
-	{
-		Distance ReturnValue;
-		ReturnValue.distance = distance;
-		ReturnValue += _Value;
-		return ReturnValue;
-	}
-	template<typename T>	Distance		operator-(T _Value)
-	{
-		Distance ReturnValue;
-		ReturnValue.distance = distance;
-		ReturnValue -= _Value;
-		return ReturnValue;
-	}
-	template<typename T>	Distance		operator*(T _Value)
-	{
-		Distance ReturnValue;
-		ReturnValue.distance = distance;
-		ReturnValue *= _Value;
-		return ReturnValue;
-	}
-	template<typename T>	Distance		operator/(T _Value)
-	{
-		Distance ReturnValue;
-		ReturnValue.distance = distance;
-		ReturnValue /= _Value;
-		return ReturnValue;
-	}
-	template<typename T>	bool			operator==(T _Value)
-	{
-		return distance == MToLS(_Value);
-	}
-	template<typename T>	bool			operator>=(T _Value)
-	{
-		return distance >= MToLS(_Value);
-	}
-	template<typename T>	bool			operator<=(T _Value)
-	{
-		return distance <= MToLS(_Value);
-	}
-	template<typename T>	bool			operator!=(T _Value)
-	{
-		return distance != MToLS(_Value);
-	}
-	template<typename T>	bool			operator>(T _Value)
-	{
-		return distance > MToLS(_Value);
-	}
-	template<typename T>	bool			operator<(T _Value)
-	{
-		return distance < MToLS(_Value);
-	}
-	template<typename T>	Distance&		operator+=(T _Value)
-	{
-		distance += MToLS(_Value);
-		return (*this);
-	}
-	template<typename T>	Distance&		operator-=(T _Value)
-	{
-		distance -= MToLS(_Value);
-		return (*this);
-	}
-	template<typename T>	Distance&		operator*=(T _Value)
-	{
-		distance *= MToLS(_Value);
-		return (*this);
-	}
-	template<typename T>	Distance&		operator/=(T _Value)
-	{
-		distance /= MToLS(_Value);
-		return (*this);
-	}
-	Distance*								operator=(Distance _Value)
-	{
-		distance = _Value.distance;
-		return this;
-	}
-	Distance								operator+(Distance _Value)
-	{
-		_Value += distance;
-		return _Value;
-	}
-	Distance								operator-(Distance _Value)
-	{
-		_Value -= distance;
-		return _Value;
-	}
-	Distance								operator*(Distance _Value)
-	{
-		_Value *= distance;
-		return _Value;
-	}
-	Distance								operator/(Distance _Value)
-	{
-		_Value /= distance;
-		return _Value;
-	}
-	bool									operator==(Distance  _Value)
-	{
-		return distance == _Value.distance;
-	}
-	bool									operator<=(Distance  _Value)
-	{
-		return distance <= _Value.distance;
-	}
-	bool									operator>=(Distance  _Value)
-	{
-		return distance >= _Value.distance;
-	}
-	bool									operator<(Distance  _Value)
-	{
-		return distance < _Value.distance;
-	}
-	bool									operator>(Distance  _Value)
-	{
-		return distance > _Value.distance;
-	}
-	bool									operator!=(Distance  _Value)
-	{
-		return distance != _Value.distance;
-	}
-	Distance&								operator+=(Distance _Value)
-	{
-		distance += _Value.distance;
-		return (*this);
-	}
-	Distance&								operator-=(Distance _Value)
-	{
-		distance -= _Value.distance;
-		return (*this);
-	}
-	Distance&								operator*=(Distance _Value)
-	{
-		distance *= _Value.distance;
-		return (*this);
-	}
-	Distance&								operator/=(Distance _Value)
-	{
-		distance /= _Value.distance;
-		return (*this);
-	}
 	long double								operator()()
 	{
-		return LSToM(distance);
+		return distance;
 	}
 };
 class StarMass
@@ -217,182 +81,52 @@ public:
 		return mass;
 	}
 	// returns mass in solar masses
-	long double SMass()
-	{
-		return mass;
-	}
+	long double SMass();
 	// returns mass in KGs
-	long double KGs()
-	{
-		return mass * _SolarStarMassConst;
-	}
+	long double KGs();
 	//KGs to solar masses
-	static long double KGToSSM(long double KGs)
-	{
-		return KGs / _SolarStarMassConst;
-	}
+	static long double KGToSSM(long double KGs);
 	//Solar masses to kgs
-	static long double SSMToKGs(long double StarMass)
-	{
-		return StarMass * _SolarStarMassConst;
-	}
-	StarMass()
-	{
-		mass = 0;
-	}
-	template<typename T>	StarMass(T _Value)
-	{
-		mass = KGToSSM(_Value);
-	}
+	static long double SSMToKGs(long double StarMass);
+	StarMass();
+	template<typename T>	StarMass(T _Value);
+	template<typename T>	StarMass		operator+(T _Value);
+	template<typename T>	StarMass		operator-(T _Value);
+	template<typename T>	StarMass		operator*(T _Value);
+	template<typename T>	StarMass		operator/(T _Value);
+	template<typename T>	bool			operator==(T _Value);
+	template<typename T>	bool			operator>=(T _Value);
+	template<typename T>	bool			operator<=(T _Value);
+	template<typename T>	bool			operator!=(T _Value);
+	template<typename T>	bool			operator>(T _Value);
+	template<typename T>	bool			operator<(T _Value);
+	template<typename T>	StarMass&		operator+=(T _Value);
+	template<typename T>	StarMass&		operator-=(T _Value);
+	template<typename T>	StarMass&		operator*=(T _Value);
+	template<typename T>	StarMass&		operator/=(T _Value);
+	StarMass*								operator=(StarMass _Value);
+	StarMass								operator+(StarMass _Value);
+	StarMass								operator-(StarMass _Value);
+	StarMass								operator*(StarMass _Value);
+	StarMass								operator/(StarMass _Value);
+	bool									operator==(StarMass  _Value);
+	bool									operator<=(StarMass  _Value);
+	bool									operator>=(StarMass  _Value);
+	bool									operator<(StarMass  _Value);
+	bool									operator>(StarMass  _Value);
+	bool									operator!=(StarMass  _Value);
+	StarMass&								operator+=(StarMass _Value);
+	StarMass&								operator-=(StarMass _Value);
+	StarMass&								operator*=(StarMass _Value);
+	StarMass&								operator/=(StarMass _Value);
 	template<typename T>	StarMass*		operator=(T _Value)
 	{
 		mass = _Value;
 		return this;
 	}
-	template<typename T>	StarMass		operator+(T _Value)
-	{
-		StarMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue += KGToSSM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	StarMass		operator-(T _Value)
-	{
-		StarMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue -= KGToSSM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	StarMass		operator*(T _Value)
-	{
-		StarMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue *= KGToSSM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	StarMass		operator/(T _Value)
-	{
-		StarMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue /= KGToSSM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	bool			operator==(T _Value)
-	{
-		return mass == KGToSSM(_Value);
-	}
-	template<typename T>	bool			operator>=(T _Value)
-	{
-		return mass >= KGToSSM(_Value);
-	}
-	template<typename T>	bool			operator<=(T _Value)
-	{
-		return mass <= KGToSSM(_Value);
-	}
-	template<typename T>	bool			operator!=(T _Value)
-	{
-		return mass != KGToSSM(_Value);
-	}
-	template<typename T>	bool			operator>(T _Value)
-	{
-		return mass > KGToSSM(_Value);
-	}
-	template<typename T>	bool			operator<(T _Value)
-	{
-		return mass < KGToSSM(_Value);
-	}
-	template<typename T>	StarMass&		operator+=(T _Value)
-	{
-		mass += KGToSSM(_Value);
-		return (*this);
-	}
-	template<typename T>	StarMass&		operator-=(T _Value)
-	{
-		mass -= KGToSSM(_Value);
-		return (*this);
-	}
-	template<typename T>	StarMass&		operator*=(T _Value)
-	{
-		mass *= KGToSSM(_Value);
-		return (*this);
-	}
-	template<typename T>	StarMass&		operator/=(T _Value)
-	{
-		mass /= KGToSSM(_Value);
-		return (*this);
-	}
-	StarMass*								operator=(StarMass _Value)
-	{
-		mass = _Value.mass;
-		return this;
-	}
-	StarMass								operator+(StarMass _Value)
-	{
-		_Value += mass;
-		return _Value;
-	}
-	StarMass								operator-(StarMass _Value)
-	{
-		_Value -= mass;
-		return _Value;
-	}
-	StarMass								operator*(StarMass _Value)
-	{
-		_Value *= mass;
-		return _Value;
-	}
-	StarMass								operator/(StarMass _Value)
-	{
-		_Value /= mass;
-		return _Value;
-	}
-	bool									operator==(StarMass  _Value)
-	{
-		return mass == _Value.mass;
-	}
-	bool									operator<=(StarMass  _Value)
-	{
-		return mass <= _Value.mass;
-	}
-	bool									operator>=(StarMass  _Value)
-	{
-		return mass >= _Value.mass;
-	}
-	bool									operator<(StarMass  _Value)
-	{
-		return mass < _Value.mass;
-	}
-	bool									operator>(StarMass  _Value)
-	{
-		return mass > _Value.mass;
-	}
-	bool									operator!=(StarMass  _Value)
-	{
-		return mass != _Value.mass;
-	}
-	StarMass&								operator+=(StarMass _Value)
-	{
-		mass += _Value.mass;
-		return (*this);
-	}
-	StarMass&								operator-=(StarMass _Value)
-	{
-		mass -= _Value.mass;
-		return (*this);
-	}
-	StarMass&								operator*=(StarMass _Value)
-	{
-		mass *= _Value.mass;
-		return (*this);
-	}
-	StarMass&								operator/=(StarMass _Value)
-	{
-		mass /= _Value.mass;
-		return (*this);
-	}
 	long double								operator()()
 	{
-		return SSMToKGs(mass);
+		return mass;
 	}
 }; 
 class PlanetMass
@@ -400,192 +134,61 @@ class PlanetMass
 protected:
 	long double mass;// in earth masses
 public:
-	operator long double() const
-	{
-		return mass;
-	}
 	// returns mass in earth masses
-	long double EMass()
-	{
-		return mass;
-	}
+	long double EMass();
 	// returns mass in KGs
-	long double KGs()
-	{
-		return mass * _EarthPlanetMassConst;
-	}
+	long double KGs();
 	// kgs to earth masses
-	static long double KGsToEM(long double mass)
-	{
-		return mass / _EarthPlanetMassConst;
-	}
+	static long double KGsToEM(long double mass);
 	// earth masses to kgs
-	static long double EMToKGs(long double mass)
-	{
-		return mass * _EarthPlanetMassConst;
-	}
-	PlanetMass()
-	{
-		mass = 0;
-	}
-	template<typename T>	PlanetMass(T _Value)
-	{
-		mass = KGsToEM(_Value);
-	}
+	static long double EMToKGs(long double mass);
+	PlanetMass();
+	template<typename T>	PlanetMass(T _Value);
+	template<typename T>	PlanetMass		operator+(T _Value);
+	template<typename T>	PlanetMass		operator-(T _Value);
+	template<typename T>	PlanetMass		operator*(T _Value);
+	template<typename T>	PlanetMass		operator/(T _Value);
+	template<typename T>	bool			operator==(T _Value);
+	template<typename T>	bool			operator>=(T _Value);
+	template<typename T>	bool			operator<=(T _Value);
+	template<typename T>	bool			operator!=(T _Value);
+	template<typename T>	bool			operator>(T _Value);
+	template<typename T>	bool			operator<(T _Value);
+	template<typename T>	PlanetMass&		operator+=(T _Value);
+	template<typename T>	PlanetMass&		operator-=(T _Value);
+	template<typename T>	PlanetMass&		operator*=(T _Value);
+	template<typename T>	PlanetMass&		operator/=(T _Value);
+	PlanetMass*								operator=(PlanetMass _Value);
+	PlanetMass								operator+(PlanetMass _Value);
+	PlanetMass								operator-(PlanetMass _Value);
+	PlanetMass								operator*(PlanetMass _Value);
+	PlanetMass								operator/(PlanetMass _Value);
+	bool									operator==(PlanetMass  _Value);
+	bool									operator<=(PlanetMass  _Value);
+	bool									operator>=(PlanetMass  _Value);
+	bool									operator<(PlanetMass  _Value);
+	bool									operator>(PlanetMass  _Value);
+	bool									operator!=(PlanetMass  _Value);
+	PlanetMass&								operator+=(PlanetMass _Value);
+	PlanetMass&								operator-=(PlanetMass _Value);
+	PlanetMass&								operator*=(PlanetMass _Value);
+	PlanetMass&								operator/=(PlanetMass _Value);
 	template<typename T>	PlanetMass*		operator=(T _Value)
 	{
 		mass = _Value;
 		return this;
 	}
-	template<typename T>	PlanetMass		operator+(T _Value)
-	{
-		PlanetMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue += KGsToEM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	PlanetMass		operator-(T _Value)
-	{
-		PlanetMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue -= KGsToEM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	PlanetMass		operator*(T _Value)
-	{
-		PlanetMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue *= KGsToEM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	PlanetMass		operator/(T _Value)
-	{
-		PlanetMass ReturnValue;
-		ReturnValue.mass = mass;
-		ReturnValue /= KGsToEM(_Value);
-		return ReturnValue;
-	}
-	template<typename T>	bool			operator==(T _Value)
-	{
-		return mass == KGsToEM(_Value);
-	}
-	template<typename T>	bool			operator>=(T _Value)
-	{
-		return mass >= KGsToEM(_Value);
-	}
-	template<typename T>	bool			operator<=(T _Value)
-	{
-		return mass <= KGsToEM(_Value);
-	}
-	template<typename T>	bool			operator!=(T _Value)
-	{
-		return mass != KGsToEM(_Value);
-	}
-	template<typename T>	bool			operator>(T _Value)
-	{
-		return mass > KGsToEM(_Value);
-	}
-	template<typename T>	bool			operator<(T _Value)
-	{
-		return mass < KGsToEM(_Value);
-	}
-	template<typename T>	PlanetMass&		operator+=(T _Value)
-	{
-		mass += KGsToEM(_Value);
-		return (*this);
-	}
-	template<typename T>	PlanetMass&		operator-=(T _Value)
-	{
-		mass -= KGsToEM(_Value);
-		return (*this);
-	}
-	template<typename T>	PlanetMass&		operator*=(T _Value)
-	{
-		mass *= KGsToEM(_Value);
-		return (*this);
-	}
-	template<typename T>	PlanetMass&		operator/=(T _Value)
-	{
-		mass /= KGsToEM(_Value);
-		return (*this);
-	}
-	PlanetMass*								operator=(PlanetMass _Value)
-	{
-		mass = _Value.mass;
-		return this;
-	}
-	PlanetMass								operator+(PlanetMass _Value)
-	{
-		_Value += mass;
-		return _Value;
-	}
-	PlanetMass								operator-(PlanetMass _Value)
-	{
-		_Value -= mass;
-		return _Value;
-	}
-	PlanetMass								operator*(PlanetMass _Value)
-	{
-		_Value *= mass;
-		return _Value;
-	}
-	PlanetMass								operator/(PlanetMass _Value)
-	{
-		_Value /= mass;
-		return _Value;
-	}
-	bool									operator==(PlanetMass  _Value)
-	{
-		return mass == _Value.mass;
-	}
-	bool									operator<=(PlanetMass  _Value)
-	{
-		return mass <= _Value.mass;
-	}
-	bool									operator>=(PlanetMass  _Value)
-	{
-		return mass >= _Value.mass;
-	}
-	bool									operator<(PlanetMass  _Value)
-	{
-		return mass < _Value.mass;
-	}
-	bool									operator>(PlanetMass  _Value)
-	{
-		return mass > _Value.mass;
-	}
-	bool									operator!=(PlanetMass  _Value)
-	{
-		return mass != _Value.mass;
-	}
-	PlanetMass&								operator+=(PlanetMass _Value)
-	{
-		mass += _Value.mass;
-		return (*this);
-	}
-	PlanetMass&								operator-=(PlanetMass _Value)
-	{
-		mass -= _Value.mass;
-		return (*this);
-	}
-	PlanetMass&								operator*=(PlanetMass _Value)
-	{
-		mass *= _Value.mass;
-		return (*this);
-	}
-	PlanetMass&								operator/=(PlanetMass _Value)
-	{
-		mass /= _Value.mass;
-		return (*this);
-	}
 	long double								operator()()
 	{
-		return EMToKGs(mass);
+		return mass;
+	}
+	operator long double() const
+	{
+		return mass;
 	}
 };
 namespace Calculation
 {
-
 	//https://ru.wikipedia.org/wiki/%D0%9E%D1%80%D0%B1%D0%B8%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D1%8C
 	long double CalculateOrbitalSpeed(StarMass sMass, PlanetMass pMass, Distance dist, Distance major_semiaxis);
 };
@@ -634,18 +237,18 @@ class Star : public Object
 private:
 	u8 myType;
 	StarMass myMass;
+	Distance myRadius;
 	long double 
-		myRadius,		// in kms
 		myLuminosity;	// in Solar Luminosities
 public:
 	StarMass Mass();
-	long double Radius();
+	Distance Radius();
 	long double Luminosity();
 	long double Type();
 	Star(uc*, Object*);
 };
 struct Orbit
-{
+{	
 	Distance
 		Major_Semiaxis,
 		Minor_Semiaxis,	
@@ -654,25 +257,24 @@ struct Orbit
 
 	Orbit(long double MaSMin, long double MiSMin, u64 random1, u64 random2, u64 random3)
 	{
-	Major_Semiaxis	= (Object::dRand(MaSMin, MaSMin + (MaSMin / 10), random1));
-	Minor_Semiaxis	= (Object::dRand(MiSMin, MiSMin + (MiSMin / 10), random1));
-	Focal_Length	= (Object::dRand(
-		Major_Semiaxis.ToLS() * 0.30,
-		Major_Semiaxis.ToLS() * 0.70, random3));
-	eccentricity = Focal_Length.ToLS() / Major_Semiaxis.ToLS();
+		Major_Semiaxis	= (Object::dRand(MaSMin, MaSMin + (MaSMin / 10), random1));
+		Minor_Semiaxis	= (Object::dRand(MiSMin, MiSMin + (MiSMin / 10), random1));
+		Focal_Length	= (Object::dRand(
+			Major_Semiaxis * 0.30,
+			Major_Semiaxis * 0.70, random3));
+		eccentricity = Focal_Length / Major_Semiaxis;
 	}
 };
 class Planet : public Object
 {
 private:
-	PlanetMass myMass;
-	long double
-		myRadius;	// in kms
-	Orbit myOrbit;
+	PlanetMass	myMass;
+	Distance	myRadius;	
+	Orbit		myOrbit;
 	long double MyCoords; // angle (1-360)
 public:
 	PlanetMass Mass();
-	long double Radius();
+	Distance  Radius();
 	long double	Now_Coords();
 	Orbit GetOrbit();
 	Planet(long double MaSMin, long double MiSMin, uc* seed, Object* parent);
@@ -682,8 +284,8 @@ class StarSystem : public Object
 private:
 	u8	planetNum=0,
 		sNum=1;
-	Star* starPtr;
 public:
+	Star * starPtr;
 	Planet ** Planets;
 	u8 getPlanetNum();
 	u8 getSNum();

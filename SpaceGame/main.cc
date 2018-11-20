@@ -6,11 +6,11 @@
 #include <random>
 #include <sstream>
 #include "SFML/Graphics.hpp"
+#define sleep std::this_thread::sleep_for(std::chrono::hours(12));
 int main()
 {
-	srand(time(0));
-	Distance dist = 200.0f;
-	std::cout << (dist / 100)() << std::endl;
-	std::cout << (dist * 100)();
-	std::this_thread::sleep_for(std::chrono::hours(1));
+	std::linear_congruential_engine<u64, 6364136223846793005
+		, 1442695040888963407, 18446744073709551615> lce;
+
+	sleep
 }
